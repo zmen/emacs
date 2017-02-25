@@ -1,3 +1,6 @@
+;; 1. set elpa.emacs-china as default melpa source
+;; 2. install required third-party packages
+
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
@@ -7,7 +10,6 @@
 (defvar my/packages '(
 		      ;; --- Auto-completion ---
 		      company
-
 		      ;; --- Major Mode ---
 		      js2-mode
 		      web-mode
@@ -18,6 +20,9 @@
 		      spaceline
 		      ;; --- Layer ---
 		      evil
+		      key-chord ;; for 'jk' to 'escape'
+		      ;; --- Others ---
+		      smex
 		      ) "Default packages")
 
 (setq package-selected-packages my/packages)

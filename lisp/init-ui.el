@@ -1,3 +1,7 @@
+;; 1. common settings like highlight, tool-bar status
+;; 2. set color-theme
+;; 3. space-line settings
+
 (tool-bar-mode -1) ;; Close tool bar
 (scroll-bar-mode -1) ;; Close scroll bar
 (global-hl-line-mode 1) ;; Highlight current line

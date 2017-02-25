@@ -1,3 +1,8 @@
+;; <f2>: open init file
+;; <f9>: loop alpha-list
+;; C-x C-b: buffer-menu
+;; C-c a: org-agenda
+;; M-x: smex settings
 (defun open-init-file()
   (interactive)
   (find-file "~/.emacs.d/init.el"))
@@ -18,5 +23,12 @@
 (global-set-key [(f9)] 'loop-alpha)
 
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
+
+(global-set-key (kbd "C-c a") 'org-agenda)
+
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 (provide 'init-keybinding)

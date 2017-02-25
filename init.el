@@ -1,10 +1,5 @@
 (package-initialize)
-(add-to-list 'load-path "~/.emacs.d/lisp/")
 
-;; Pakcage Managment
-(require 'init-packages)
-(require 'init-ui)
-(require 'init-keybinding)
-(require 'init-improve-default)
-(require 'init-evil)
-(require 'init-filetype-match)
+(require 'org-install)
+(require 'ob-tangle)
+(org-babel-load-file (expand-file-name "z.setting.org" user-emacs-directory))

@@ -1,0 +1,172 @@
+* zmen's emacs setting
+
+** packages initialization
+
+List packages to install.
+
+#+BEGIN_SRC emacs-lisp
+  (when (>= emacs-major-version 24)
+    (require 'package)
+    (package-initialize)
+    (add-to-list 'package-archives '("melpa" . "http://elpa.emacs-china.org/melpa/") t))
+
+  (require 'cl)
+  (defvar my/packages '(
+                        ;; --- Auto-completion ---
+                        company
+                        ;; --- Major Mode ---
+                        js2-mode
+                        web-mode
+                        ;; --- Themes ---
+                        monokai-theme
+                        solarized-theme
+                        spacemacs-theme
+                        spaceline
+                        ;; --- Layer ---
+                        evil
+                        key-chord ;; for 'jk' to 'escape'
+                        ;; --- Others ---
+                        smex
+                        ) "Default packages")
+
+  (setq package-selected-packages my/packages)
+  (defun my/packages-installed-p ()
+    (loop for pkg in my/packages
+          when (not (package-installed-p pkg))
+          do (return nil)
+          finally (return t)))
+  (unless (my/packages-installed-p)
+    (message "%s" "Refreshing package database...")
+    (package-refresh-contents)
+    (dolist (pkg my/packages)
+      (when (not (package-installed-p pkg))
+        (package-install pkg))))
+#+END_SRC
+
+** default settings
+
+*** common settings
+
+#+BEGIN_SRC emacs-lisp
+
+  (tool-bar-mode -1) ;; Close tool bar
+  (scroll-bar-mode -1) ;; Close scroll bar
+  (global-hl-line-mode 1) ;; Highlight current line
+  (global-linum-mode 1) ;; Always show line
+  (setq inhibit-splash-screen 1) ;; Remove welcome page
+
+#+END_SRC
+
+*** improve default
+
+#+BEGIN_SRC emacs-lisp
+  (setq make-backup-files nil)
+
+  (require 'recentf)
+  (recentf-mode 1)
+  (setq recentf-max-menu-item 10)
+
+  (delete-selection-mode 1)
+
+  (global-auto-revert-mode 1)
+
+  (setq auto-save-default nil)
+
+  (setq ring-bell-function 'ignore)
+
+  (fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+** themes
+
+set color-theme: monokai
+set status-bar-theme: spaceline-spacemacs-theme
+
+#+BEGIN_SRC emacs-lisp
+  (load-theme 'monokai t)
+
+  (require 'spaceline-config)
+  (spaceline-spacemacs-theme)
+#+END_SRC
+
+** key-bindings
+
+*** open-init-file <f2>
+#+BEGIN_SRC emacs-lisp
+  (defun open-init-file()
+    (interactive)
+    (find-file "~/.emacs.d/z.setting.org"))
+  (global-set-key (kbd "<f2>") 'open-init-file)
+#+END_SRC
+
+*** set editor background transparent <f9>
+#+BEGIN_SRC emacs-lisp
+  (setq alpha-list '((55 55) (100 100)))
+  (defun loop-alpha ()
+    (interactive)
+    (let ((h (car alpha-list)))
+      ((lambda (a ab)
+         (set-frame-parameter (selected-frame) 'alpha (list a ab))
+         (add-to-list 'default-frame-alist (cons 'alpha (list a ab)))
+         ) (car h) (car (cdr h)))
+      (setq alpha-list (cdr (append alpha-list (list h))))
+      )
+    )
+  (global-set-key [(f9)] 'loop-alpha)
+#+END_SRC
+
+** plugins settings
+
+*** Smex
+
+#+BEGIN_SRC emacs-lisp
+  (smex-initialize)
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+#+END_SRC
+    
+** org settings
+#+BEGIN_SRC emacs-lisp
+  (require 'org)
+  (setq org-src-fontify-natively t)
+
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "~/.emacs.d/gtd.org" "Work")
+           "* TODO [#B] %?\n %i\n"
+           :empty-lines 1)))
+#+END_SRC
+   
+** evil model
+
+#+BEGIN_SRC emacs-lisp
+  (require 'evil)
+  (evil-mode 1)
+
+  (setq evil-default-state 'normal)
+
+  ;; Bind 'jk' to escape in evil insert mode by key-chord-mode
+  ;; Note that 'jk' equals to 'kj' in this way
+  (setq key-chord-two-keys-delay 0.5)
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  (key-chord-mode 1)
+#+END_SRC
+
+** mode
+
+*** major mode
+
+#+BEGIN_SRC emacs-lisp
+  (setq auto-mode-alist
+        (append
+         '(("\\.js\\'" . js2-mode)
+           ("\\.C\\'" . c++-mode))
+         auto-mode-alist))
+#+END_SRC
+
+** Others
+
+*** scheme compiler
+#+BEGIN_SRC emacs-lisp
+  (setq scheme-program-name "scm")
+#+END_SRC
