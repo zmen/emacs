@@ -21,12 +21,15 @@ List packages to install.
                         monokai-theme
                         solarized-theme
                         spacemacs-theme
+                        sublime-themes
                         spaceline
                         ;; --- Layer ---
                         evil
                         key-chord ;; for 'jk' to 'escape'
                         ;; --- Others ---
                         smex
+                        neotree
+                        ivy
                         ) "Default packages")
 
   (setq package-selected-packages my/packages)
@@ -79,11 +82,11 @@ List packages to install.
 
 ** themes
 
-set color-theme: monokai
+set color-theme: spolsky (one of theme-package: sublime-themes)
 set status-bar-theme: spaceline-spacemacs-theme
 
 #+BEGIN_SRC emacs-lisp
-  (load-theme 'monokai t)
+  (load-theme 'spolsky t)
 
   (require 'spaceline-config)
   (spaceline-spacemacs-theme)
@@ -132,7 +135,7 @@ set status-bar-theme: spaceline-spacemacs-theme
   (setq org-src-fontify-natively t)
 
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/.emacs.d/gtd.org" "Work")
+        '(("t" "Todo" entry (file+headline "~/Documents/orgs/todos/gtd.org" "Work")
            "* TODO [#B] %?\n %i\n"
            :empty-lines 1)))
 #+END_SRC
@@ -169,4 +172,13 @@ set status-bar-theme: spaceline-spacemacs-theme
 *** scheme compiler
 #+BEGIN_SRC emacs-lisp
   (setq scheme-program-name "scm")
+#+END_SRC
+** latex
+
+#+BEGIN_SRC emacs-lisp
+  (getenv "PATH")
+  (setenv "PATH"
+          (concat
+           "/Library/TeX/texbin/" ":"
+           (getenv "PATH")))
 #+END_SRC
