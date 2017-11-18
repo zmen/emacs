@@ -17,6 +17,7 @@ List packages to install.
                         ;; --- Major Mode ---
                         js2-mode
                         web-mode
+                        markdown-mode
                         ;; --- Themes ---
                         monokai-theme
                         solarized-theme
@@ -57,6 +58,8 @@ List packages to install.
   (global-hl-line-mode 1) ;; Highlight current line
   (global-linum-mode 1) ;; Always show line
   (setq inhibit-splash-screen 1) ;; Remove welcome page
+  (custom-set-variables
+    '(initial-frame-alist (quote ((fullscreen . maximized))))) ;; Start with full screen
 
 #+END_SRC
 
@@ -80,6 +83,11 @@ List packages to install.
   (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
+*** font
+#+BEGIN_SRC emacs-lisp
+  (when (member "Anonymous Pro" (font-family-list))
+    (set-face-attribute 'default nil :font "Anonymous Pro-16"))
+#+END_SRC
 ** themes
 
 set color-theme: spolsky (one of theme-package: sublime-themes)
