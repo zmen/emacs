@@ -87,6 +87,11 @@ List packages to install.
 #+BEGIN_SRC emacs-lisp
   (when (member "Anonymous Pro" (font-family-list))
     (set-face-attribute 'default nil :font "Anonymous Pro-16"))
+  ;; Chinese font
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font)
+                      charset
+                      (font-spec :family "FZShengShiKaiShuS-R-GB" :size 18)))
 #+END_SRC
 ** themes
 
@@ -94,7 +99,7 @@ set color-theme: spolsky (one of theme-package: sublime-themes)
 set status-bar-theme: spaceline-spacemacs-theme
 
 #+BEGIN_SRC emacs-lisp
-  (load-theme 'spolsky t)
+  (load-theme 'spacemacs-light t)
 
   (require 'spaceline-config)
   (spaceline-spacemacs-theme)
@@ -190,3 +195,4 @@ set status-bar-theme: spaceline-spacemacs-theme
            "/Library/TeX/texbin/" ":"
            (getenv "PATH")))
 #+END_SRC
+   
