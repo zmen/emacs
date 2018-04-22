@@ -24,6 +24,7 @@ List packages to install.
                         spacemacs-theme
                         sublime-themes
                         spaceline
+                        all-the-icons
                         ;; --- Layer ---
                         evil
                         key-chord ;; for 'jk' to 'escape'
@@ -87,7 +88,9 @@ List packages to install.
 *** font
 #+BEGIN_SRC emacs-lisp
   (when (member "Anonymous Pro" (font-family-list))
-    (set-face-attribute 'default nil :font "Anonymous Pro-16"))
+    ;;(set-face-attribute 'default nil :font "PT Mono-18"))
+    ;;(set-face-attribute 'default nil :font "Anonymous Pro-22"))
+    (set-face-attribute 'default nil :font "mononoki-18"))
   ;; Chinese font
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
@@ -101,12 +104,14 @@ List packages to install.
 
 set color-theme: spolsky (one of theme-package: sublime-themes)
 set status-bar-theme: spaceline-spacemacs-theme
+set neo-tree icons
 
 #+BEGIN_SRC emacs-lisp
-  (load-theme 'spacemacs-light t)
+  (load-theme 'misterioso t)
 
   (require 'spaceline-config)
   (spaceline-spacemacs-theme)
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 #+END_SRC
 
 ** key-bindings
@@ -157,6 +162,13 @@ set status-bar-theme: spaceline-spacemacs-theme
            :empty-lines 1)))
 #+END_SRC
    
+set the org-bullets
+
+#+BEGIN_SRC emacs-lisp
+  (require 'org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+END_SRC
+   
 ** evil model
 
 #+BEGIN_SRC emacs-lisp
@@ -200,3 +212,13 @@ set status-bar-theme: spaceline-spacemacs-theme
            (getenv "PATH")))
 #+END_SRC
    
+** Neotree settings
+
+#+BEGIN_SRC emacs-lisp
+    (add-hook 'neotree-mode-hook
+              (lambda ()
+                (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+                (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-quick-look)
+                (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+                (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
+#+END_SRC
