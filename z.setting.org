@@ -31,6 +31,7 @@ List packages to install.
                         smex
                         neotree
                         ivy
+                        org-bullets
                         ) "Default packages")
 
   (setq package-selected-packages my/packages)
@@ -92,6 +93,9 @@ List packages to install.
     (set-fontset-font (frame-parameter nil 'font)
                       charset
                       (font-spec :family "FZShengShiKaiShuS-R-GB" :size 18)))
+
+  (require 'org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+END_SRC
 ** themes
 
