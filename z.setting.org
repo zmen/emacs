@@ -25,6 +25,7 @@ List packages to install.
                         sublime-themes
                         spaceline
                         all-the-icons
+                        tangotango-theme
                         ;; --- Layer ---
                         evil
                         key-chord ;; for 'jk' to 'escape'
@@ -88,14 +89,12 @@ List packages to install.
 *** font
 #+BEGIN_SRC emacs-lisp
   (when (member "Anonymous Pro" (font-family-list))
-    ;;(set-face-attribute 'default nil :font "PT Mono-18"))
-    ;;(set-face-attribute 'default nil :font "Anonymous Pro-22"))
-    (set-face-attribute 'default nil :font "mononoki-18"))
+    (set-face-attribute 'default nil :font "Anonymous Pro-18"))
   ;; Chinese font
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
                       charset
-                      (font-spec :family "FZShengShiKaiShuS-R-GB" :size 18)))
+                      (font-spec :family "FZYanSongS-R-GB" :size 18)))
 
   (require 'org-bullets)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -107,7 +106,7 @@ set status-bar-theme: spaceline-spacemacs-theme
 set neo-tree icons
 
 #+BEGIN_SRC emacs-lisp
-  (load-theme 'misterioso t)
+  (load-theme 'tangotango t)
 
   (require 'spaceline-config)
   (spaceline-spacemacs-theme)
