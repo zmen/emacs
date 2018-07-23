@@ -57,7 +57,7 @@ List packages to install.
 #+BEGIN_SRC emacs-lisp
 
   (tool-bar-mode -1) ;; Close tool bar
-  (scroll-bar-mode -1) ;; Close scroll bar
+  ;;(scroll-bar-mode -1) ;; Close scroll bar
   (global-hl-line-mode 1) ;; Highlight current line
   (global-linum-mode 1) ;; Always show line
   (setq inhibit-splash-screen 1) ;; Remove welcome page
@@ -88,16 +88,18 @@ List packages to install.
 
 *** font
 #+BEGIN_SRC emacs-lisp
-  (when (member "Anonymous Pro" (font-family-list))
-    (set-face-attribute 'default nil :font "Anonymous Pro-18"))
-  ;; Chinese font
-  (dolist (charset '(kana han symbol cjk-misc bopomofo))
-    (set-fontset-font (frame-parameter nil 'font)
-                      charset
-                      (font-spec :family "FZYanSongS-R-GB" :size 18)))
+  (when (display-graphic-p)
+      (when (member "Anonymous Pro" (font-family-list))
+        (set-face-attribute 'default nil :font "Anonymous Pro-18"))
+       ;; (set-face-attribute 'default nil :font "American Typewriter-18"))
+      ;; Chinese font
+      (dolist (charset '(kana han symbol cjk-misc bopomofo))
+        (set-fontset-font (frame-parameter nil 'font)
+                          charset
+                          (font-spec :family "FZYanSongS-R-GB" :size 18)))
 
-  (require 'org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+      (require 'org-bullets)
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
 ** themes
 
@@ -159,6 +161,7 @@ set neo-tree icons
         '(("t" "Todo" entry (file+headline "~/Documents/orgs/todos/gtd.org" "Work")
            "* TODO [#B] %?\n %i\n"
            :empty-lines 1)))
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
 #+END_SRC
    
 set the org-bullets
@@ -181,6 +184,9 @@ set the org-bullets
   (setq key-chord-two-keys-delay 0.5)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
   (key-chord-mode 1)
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (define-key evil-normal-state-map (kbd "TAB") 'org-cycle)))
 #+END_SRC
 
 ** mode
