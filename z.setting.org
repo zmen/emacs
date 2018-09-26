@@ -103,16 +103,16 @@ List packages to install.
 #+END_SRC
 ** themes
 
-set color-theme: spolsky (one of theme-package: sublime-themes)
 set status-bar-theme: spaceline-spacemacs-theme
 set neo-tree icons
+load local theme path
 
 #+BEGIN_SRC emacs-lisp
-  (load-theme 'tangotango t)
-
   (require 'spaceline-config)
   (spaceline-spacemacs-theme)
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+  (load-theme 'dracula t)
 #+END_SRC
 
 ** key-bindings
